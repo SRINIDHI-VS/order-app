@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import OrderGrid from "./components/OrderGrid";
+import OrderForm from "./components/OrderForm";
+import { fetchOrders } from "./api/orderApi";
 
-function App() {
+export default function App() {
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+  const refreshGrid = async () => {
+    await fetchOrders();
+    window.location.reload();
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1 className="text-4xl font-bold text-center mb-10">Order Management</h1>
+
+      <OrderForm
+        selectedOrder={selectedOrder}
+        refreshGrid={refreshGrid}
+        clearSelection={() => setSelectedOrder(null)}
+      />
+
+      <OrderGrid onSelectEdit={(order) => setSelectedOrder(order)} />
     </div>
   );
 }
-
-export default App;
