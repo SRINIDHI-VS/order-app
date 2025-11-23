@@ -1,38 +1,33 @@
-import { useState, useCallback, useEffect } from "react";
 import OrderGrid from "./components/OrderGrid";
 import OrderForm from "./components/OrderForm";
-import { fetchOrders } from "./api/orderApi";
+import useOrders from "./hooks/useOrders";
 
 export default function App() {
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [orders, setOrders] = useState([]);
-
-  const loadOrders = useCallback(async () => {
-    const data = await fetchOrders();
-    setOrders(data);
-  }, []);
-
-  useEffect(() => {
-    loadOrders();
-  }, [loadOrders]);
+  const { orders, selectedOrder, setSelectedOrder, refresh, error, loading } =
+    useOrders();
 
   return (
-    <div className="min-h-screen bg-indigo-50  p-6">
+    <div className="min-h-screen bg-indigo-50 p-6">
       <h1 className="text-4xl font-extrabold text-center mb-8 text-gray-800 tracking-tight">
         Order Management
       </h1>
 
-      <div className="max-w-5xl mx-auto bg-indigo-100  shadow-lg rounded-xl p-6 space-y-8">
+      <div className="max-w-5xl mx-auto bg-indigo-100 shadow-lg rounded-xl p-6 space-y-8">
         <OrderForm
           selectedOrder={selectedOrder}
-          refreshGrid={loadOrders}
+          refreshGrid={refresh}
           clearSelection={() => setSelectedOrder(null)}
         />
-        <OrderGrid
-          orders={orders}
-          onSelectEdit={(order) => setSelectedOrder(order)}
-          refreshGrid={loadOrders}
-        />
+        {loading ? (
+          <p className="text-gray-600 text-center">Loading orders...</p>
+        ) : (
+          <OrderGrid
+            orders={orders}
+            onSelectEdit={setSelectedOrder}
+            refreshGrid={refresh}
+          />
+        )}
+        {error && <p className="text-red-600 text-center">{error}</p>}
       </div>
     </div>
   );

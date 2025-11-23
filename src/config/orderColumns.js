@@ -1,5 +1,5 @@
-import { toNumber } from "../utils/number";
-import { ActionButton } from "../components/GridButtons";
+import { toNumber } from "../utils/helpers";
+import ActionButton from "../components/GridButtons";
 
 export const getOrderColumns = (onSelectEdit, handleDelete) => [
   {
