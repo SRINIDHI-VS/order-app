@@ -1,97 +1,53 @@
-import { useEffect, useState } from "react";
+import { useMemo, useCallback } from "react";
 import { AgGridReact } from "ag-grid-react";
+import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
+import { deleteOrder } from "../api/orderApi";
+import { getOrderColumns } from "../config/orderColumns";
+
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
-import { fetchOrders, deleteOrder } from "../api/orderApi";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-export default function OrderGrid({ onSelectEdit }) {
-  const [orders, setOrders] = useState([]);
+export default function OrderGrid({ orders, onSelectEdit, refreshGrid }) {
+  
+  const handleDelete = useCallback(
+    async (id) => {
+      if (!window.confirm("Are you sure you want to delete this order?"))
+        return;
 
-  const loadData = async () => {
-    const data = await fetchOrders();
-    setOrders(data);
-  };
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const handleDelete = async (id) => {
-    await deleteOrder(id);
-    loadData();
-  };
-
-  // Convert ANY value to a number safely
-  const toNumber = (value) => {
-    const num = parseFloat(value);
-    return isNaN(num) ? 0 : num;
-  };
-
-  const columns = [
-    { field: "id", headerName: "ID", width: 80 },
-    { field: "name", headerName: "Name", width: 150 },
-    { field: "client", headerName: "Client", width: 150 },
-    { field: "product", headerName: "Product", width: 150 },
-
-    // FIXED PRICE1 COLUMN
-    {
-      headerName: "Price 1",
-      field: "price1",
-      width: 120,
-      valueGetter: (p) => toNumber(p.data.price1),
-      valueFormatter: (p) => p.value.toFixed(2),
+      await deleteOrder(id);
+      await refreshGrid();
     },
+    [refreshGrid]
+  );
 
-    // FIXED PRICE2 COLUMN
-    {
-      headerName: "Price 2",
-      field: "price2",
-      width: 120,
-      valueGetter: (p) => toNumber(p.data.price2),
-      valueFormatter: (p) => p.value.toFixed(2),
-    },
-
-    // FIXED TOTAL PRICE
-    {
-      headerName: "Total Price",
-      width: 150,
-      valueGetter: (p) =>
-        toNumber(p.data.price1) + toNumber(p.data.price2),
-      valueFormatter: (p) => p.value.toFixed(2),
-      cellStyle: { fontWeight: "bold", color: "green" },
-    },
-
-    {
-      headerName: "Edit",
-      width: 100,
-      cellRenderer: (p) => (
-        <button onClick={() => onSelectEdit(p.data)}>Edit</button>
-      ),
-    },
-    {
-      headerName: "Delete",
-      width: 100,
-      cellRenderer: (p) => (
-        <button style={{ color: "red" }} onClick={() => handleDelete(p.data.id)}>
-          Delete
-        </button>
-      ),
-    },
-  ];
+  const columns = useMemo(
+    () => getOrderColumns(onSelectEdit, handleDelete),
+    [onSelectEdit, handleDelete]
+  );
 
   return (
-    <div
-      className="ag-theme-alpine"
-      style={{ height: 500, width: "90%", margin: "auto" }}
-    >
-      <AgGridReact
-        rowData={orders}
-        columnDefs={columns}
-        suppressReactErrorOverlay={true}
-      />
+    <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-200">
+      <header className="mb-4">
+        <h2 className="text-2xl font-bold text-gray-800">Orders</h2>
+        <p className="text-gray-600 text-sm mt-1">
+          {orders ? `${orders.length} total records` : "Loading..."}
+        </p>
+      </header>
+
+      <div className="ag-theme-alpine w-full" style={{ height: 550 }}>
+        <AgGridReact
+          rowData={orders}
+          columnDefs={columns}
+          animateRows={true}
+          rowHeight={60}
+          headerHeight={50}
+          pagination={true}
+          paginationPageSize={10}
+          ensureDomOrder={true}
+        />
+      </div>
     </div>
   );
 }
