@@ -7,21 +7,19 @@ export const getOrderColumns = (onSelectEdit, handleDelete) => [
     headerName: "ID",
     width: 100,
     headerClass: "flex items-center justify-center text-center",
-    cellClass: "flex items-center justify-center",
+    cellClass: "flex items-center",
   },
   {
     field: "name",
     headerName: "Customer Name",
-    flex: 1,
     headerClass: "flex items-center justify-center text-center",
-    cellClass: "flex items-center justify-center",
+    cellClass: "flex items-center",
   },
   {
     field: "product",
     headerName: "Product",
-    flex: 1,
     headerClass: "flex items-center justify-center text-center",
-    cellClass: "flex items-center justify-center",
+    cellClass: "flex items-center",
   },
   {
     field: "price1",
@@ -31,34 +29,31 @@ export const getOrderColumns = (onSelectEdit, handleDelete) => [
     width: 130,
     type: "numericColumn",
     headerClass: "flex items-center justify-center text-center",
-    cellClass: "flex items-center justify-center",
+    cellClass: "flex items-center",
   },
   {
     field: "price2",
     headerName: "Price 2",
     valueGetter: (p) => toNumber(p.data.price2),
     valueFormatter: (p) => `$${p.value.toFixed(2)}`,
-    width: 130,
     type: "numericColumn",
     headerClass: "flex items-center justify-center text-center",
-    cellClass: "flex items-center justify-center",
+    cellClass: "flex items-center",
   },
   {
     field: "totalPrice",
     headerName: "Total",
     valueGetter: (p) => toNumber(p.data.price1) + toNumber(p.data.price2),
     valueFormatter: (p) => `$${p.value.toFixed(2)}`,
-    width: 130,
     type: "numericColumn",
     headerClass: "flex items-center justify-center text-center",
-    cellClass: "flex items-center justify-center font-bold text-green-600",
+    cellClass: "flex items-center font-bold text-green-600",
   },
   {
     headerName: "Actions",
-    width: 200,
     headerClass: "flex items-center justify-center text-center",
     cellRenderer: (p) => (
-      <div className="flex gap-4 items-center h-full justify-center">
+      <div className="flex gap-4 items-center h-full">
         <ActionButton
           label="Edit"
           className="bg-indigo-500 hover:bg-indigo-600"
