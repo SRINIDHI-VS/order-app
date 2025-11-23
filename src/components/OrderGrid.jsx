@@ -16,7 +16,8 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
 
   const handleDelete = useCallback(
     async (id) => {
-      if (!window.confirm("Are you sure you want to delete this order?")) return;
+      if (!window.confirm("Are you sure you want to delete this order?"))
+        return;
 
       try {
         await deleteOrder(id);
@@ -41,14 +42,6 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
     gridRef.current?.exportDataAsCsv({ fileName: "orders.csv" });
   };
 
-  const autosizeAll = () => {
-    if (!gridRef.current) return;
-    const colApi = gridRef.current.columnApi;
-
-    const allCols = colApi.getColumns().map((col) => col.getId());
-    colApi.autoSizeColumns(allCols);
-  };
-
   const deleteSelected = async () => {
     const rows = gridRef.current?.getSelectedRows();
     if (!rows.length) return alert("Select rows to delete.");
@@ -64,7 +57,9 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
       <header className="mb-4 flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-gray-800">Orders</h2>
-          <p className="text-gray-600 text-sm mt-1">{processed.length} total records</p>
+          <p className="text-gray-600 text-sm mt-1">
+            {processed.length} total records
+          </p>
         </div>
 
         <div style={{ display: "flex", gap: 8 }}>
@@ -76,15 +71,19 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
             style={{ minWidth: 200 }}
           />
 
-          <button onClick={exportCsv} className="px-3 py-2 rounded text-white" style={{ background: "#059669" }}>
+          <button
+            onClick={exportCsv}
+            className="px-3 py-2 rounded text-white"
+            style={{ background: "#059669" }}
+          >
             Export CSV
           </button>
 
-          <button onClick={autosizeAll} className="px-3 py-2 rounded text-white" style={{ background: "#2563eb" }}>
-            Autosize
-          </button>
-
-          <button onClick={deleteSelected} className="px-3 py-2 rounded text-white" style={{ background: "#ef4444" }}>
+          <button
+            onClick={deleteSelected}
+            className="px-3 py-2 rounded text-white"
+            style={{ background: "#ef4444" }}
+          >
             Delete Selected
           </button>
         </div>
@@ -95,10 +94,8 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
           onGridReady={onGridReady}
           rowData={processed}
           columnDefs={columnDefs}
-          rowSelection={{
-            mode: "multiple",
-            enableClickSelection: false,
-          }}
+          rowSelection="multiple"
+          suppressRowClickSelection={false}
           pagination={true}
           paginationPageSize={10}
           animateRows={true}
