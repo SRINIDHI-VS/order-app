@@ -5,9 +5,17 @@ import { validateOrder, toNumber } from "../utils/helpers";
 
 const INITIAL_FORM_STATE = {
   name: "",
+  avatar: "",
+  client: "",
+  uniqueid: "",
   product: "",
+  color: "",
+  company: "",
+  showroom: "",
+  country: "",
   price1: "",
   price2: "",
+  loadingDate: "",
 };
 
 export default function OrderForm({
@@ -21,12 +29,22 @@ export default function OrderForm({
   const [success, setSuccess] = useState("");
 
   useEffect(() => {
-    if (selectedOrder) {
+    if (selectedOrder?.id) {
       setForm({
         name: selectedOrder.name || "",
+        avatar: selectedOrder.avatar || "",
+        client: selectedOrder.client || "",
+        uniqueid: selectedOrder.uniqueid || "",
         product: selectedOrder.product || "",
+        color: selectedOrder.color || "",
+        company: selectedOrder.company || "",
+        showroom: selectedOrder.showroom || "",
+        country: selectedOrder.country || "",
         price1: selectedOrder.price1 ?? "",
         price2: selectedOrder.price2 ?? "",
+        loadingDate: selectedOrder.loadingDate
+          ? selectedOrder.loadingDate.slice(0, 10)
+          : "",
       });
     } else {
       setForm(INITIAL_FORM_STATE);
@@ -73,7 +91,7 @@ export default function OrderForm({
         price2: toNumber(form.price2),
       };
 
-      if (selectedOrder) {
+      if (selectedOrder?.id) {
         await updateOrder(selectedOrder.id, payload);
         setSuccess("Order updated successfully!");
       } else {
@@ -103,19 +121,27 @@ export default function OrderForm({
 
   const fields = [
     { label: "Customer Name", name: "name" },
+    { label: "Avatar URL", name: "avatar" },
+    { label: "Client", name: "client" },
+    { label: "Unique ID", name: "uniqueid" },
     { label: "Product", name: "product" },
+    { label: "Color", name: "color" },
+    { label: "Company", name: "company" },
+    { label: "Showroom", name: "showroom" },
+    { label: "Country", name: "country" },
     { label: "Price 1", name: "price1", type: "number" },
     { label: "Price 2", name: "price2", type: "number" },
+    { label: "Loading Date", name: "loadingDate", type: "date" },
   ];
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-2xl font-bold text-gray-800">
-          {selectedOrder ? "Update Order" : "Create New Order"}
+          {selectedOrder?.id ? "Update Order" : "Create New Order"}
         </h3>
 
-        {selectedOrder && (
+        {selectedOrder?.id && (
           <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
             Editing ID: {selectedOrder.id}
           </span>
@@ -165,18 +191,18 @@ export default function OrderForm({
           type="button"
           onClick={handleSubmit}
           disabled={isSubmitting}
-          className="flex-1 bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           {isSubmitting
-            ? selectedOrder
+            ? selectedOrder?.id
               ? "Updating..."
               : "Creating..."
-            : selectedOrder
+            : selectedOrder?.id
             ? "Update Order"
             : "Create Order"}
         </button>
 
-        {selectedOrder && (
+        {selectedOrder?.id && (
           <button
             type="button"
             onClick={handleCancel}

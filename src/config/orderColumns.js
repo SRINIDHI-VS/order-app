@@ -1,6 +1,7 @@
 import AvatarCell from "../components/AvatarCell";
 import { toNumber } from "../utils/helpers";
-import ActionButton from "../components/GridButtons";
+import IconButton from "../components/IconButton";
+import { Pencil, Trash2 } from "lucide-react";
 
 export const getOrderColumns = (onSelectEdit, handleDelete) => [
   {
@@ -96,25 +97,25 @@ export const getOrderColumns = (onSelectEdit, handleDelete) => [
   {
     headerName: "Actions",
     pinned: "right",
-    width: 200,
+    width: 80,
     cellRenderer: (params) => (
       <div
         style={{
           display: "flex",
-          gap: 8,
+          gap: 3,
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <ActionButton
-          label="Edit"
-          className="bg-indigo-500 hover:bg-indigo-600"
+        <IconButton
+          icon={Pencil}
+          className="text-blue-600 hover:text-blue-800"
           onClick={() => onSelectEdit(params.data)}
         />
 
-        <ActionButton
-          label="Delete"
-          className="bg-red-500 hover:bg-red-600"
+        <IconButton
+          icon={Trash2}
+          className="text-red-600 hover:text-red-800"
           onClick={() => handleDelete(params.data.id)}
         />
       </div>

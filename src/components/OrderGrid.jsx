@@ -3,6 +3,7 @@ import { AgGridReact } from "ag-grid-react";
 import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
 import { deleteOrder } from "../api/orderApi";
 import { getOrderColumns } from "../config/orderColumns";
+import ActionButton from "./GridButtons";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
@@ -53,8 +54,8 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
   };
 
   return (
-    <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-200">
-      <header className="mb-4 flex items-center justify-between">
+    <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-200 overflow-x-auto">
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
         <div>
           <h2 className="text-2xl font-bold text-gray-800">Orders</h2>
           <p className="text-gray-600 text-sm mt-1">
@@ -62,30 +63,31 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
           </p>
         </div>
 
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className="flex flex-wrap items-center gap-2">
           <input
             value={quickFilter}
             onChange={(e) => setQuickFilter(e.target.value)}
             placeholder="Quick search..."
-            className="px-3 py-2 border rounded"
+            className="px-3 py-2 border rounded w-full sm:w-auto"
             style={{ minWidth: 200 }}
           />
+          <ActionButton
+            label="+ Add Order"
+            className="bg-blue-500"
+            onClick={() => onSelectEdit({ isNew: true })}
+          />
 
-          <button
+          <ActionButton
+            label="Export CSV"
+            className="bg-emerald-600"
             onClick={exportCsv}
-            className="px-3 py-2 rounded text-white"
-            style={{ background: "#059669" }}
-          >
-            Export CSV
-          </button>
+          />
 
-          <button
+          <ActionButton
+            label="Delete Selected"
+            className="bg-red-600"
             onClick={deleteSelected}
-            className="px-3 py-2 rounded text-white"
-            style={{ background: "#ef4444" }}
-          >
-            Delete Selected
-          </button>
+          />
         </div>
       </header>
 
@@ -100,7 +102,7 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
           paginationPageSize={10}
           animateRows={true}
           headerHeight={52}
-          rowHeight={40}
+          rowHeight={45}
           quickFilterText={quickFilter}
           defaultColDef={{
             sortable: true,
