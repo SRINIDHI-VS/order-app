@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ================================
+   CELL FOCUS & ROW SELECTION
+================================ */
+.ag-theme-alpine .ag-cell:focus,
+.ag-theme-alpine .ag-cell:focus-within {
+  outline: none !important;
+  border: none !important;
+}
+
+.ag-theme-alpine {
+  --ag-selected-row-background-color: rgb(177, 206, 253) !important;
+  --ag-selected-row-border-color: rgb(175, 204, 250) !important;
+}
+
+.ag-theme-alpine .ag-row-selected .ag-cell {
+  background-color: rgb(207, 222, 247) !important;
+}
+
+.ag-theme-alpine .ag-row:hover {
+  background-color: rgb(180, 204, 242) !important;
+}

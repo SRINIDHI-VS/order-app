@@ -67,12 +67,12 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
           <input
             value={quickFilter}
             onChange={(e) => setQuickFilter(e.target.value)}
-            placeholder="Quick search..."
+            placeholder="Quick search"
             className="px-3 py-2 border rounded w-full sm:w-auto"
             style={{ minWidth: 200 }}
           />
           <ActionButton
-            label="+ Add Order"
+            label="Add Order"
             className="bg-blue-500"
             onClick={() => onSelectEdit({ isNew: true })}
           />
@@ -97,9 +97,8 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
           rowData={processed}
           columnDefs={columnDefs}
           rowSelection="multiple"
-          suppressRowClickSelection={false}
           pagination={true}
-          paginationPageSize={10}
+          paginationPageSize={20}
           animateRows={true}
           headerHeight={52}
           rowHeight={45}
@@ -107,21 +106,9 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
           defaultColDef={{
             sortable: true,
             filter: true,
-            floatingFilter: true,
             resizable: true,
             minWidth: 120,
-          }}
-          sideBar={{
-            toolPanels: ["columns", "filters"],
-          }}
-          statusBar={{
-            statusPanels: [
-              {
-                statusPanel: "agTotalAndFilteredRowCountComponent",
-                align: "left",
-              },
-              { statusPanel: "agAggregationComponent", align: "right" },
-            ],
+            cellClass: "flex items-center",
           }}
         />
       </div>

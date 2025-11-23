@@ -8,10 +8,10 @@ export const getOrderColumns = (onSelectEdit, handleDelete) => [
     headerName: "",
     checkboxSelection: true,
     headerCheckboxSelection: true,
-    width: 60,
+    width: 40,
     pinned: "left",
+    filter: false,
   },
-
   {
     headerName: "Basic Details",
     marryChildren: true,
@@ -56,6 +56,7 @@ export const getOrderColumns = (onSelectEdit, handleDelete) => [
         headerName: "Avatar",
         width: 120,
         cellRenderer: AvatarCell,
+        filter: false,
       },
     ],
   },
@@ -97,12 +98,13 @@ export const getOrderColumns = (onSelectEdit, handleDelete) => [
   {
     headerName: "Actions",
     pinned: "right",
-    width: 80,
+    width: 100,
+    filter: false,
     cellRenderer: (params) => (
       <div
         style={{
           display: "flex",
-          gap: 3,
+          gap: 6,
           justifyContent: "center",
           alignItems: "center",
         }}
