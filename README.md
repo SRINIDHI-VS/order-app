@@ -1,71 +1,101 @@
-# Getting Started with Create React App
+# Order Management App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple React app to manage orders with create, read, update, and delete functionality. Built with React, AG Grid, and Tailwind CSS.
 
-## Available Scripts
+## 🚀 Live Demo
 
-In the project directory, you can run:
+🔗 [View Live App](https://order-app-mu-six.vercel.app/)
 
-### `npm start`
+## 📦 GitHub Repository
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+📦 [GitHub Repo](https://github.com/SRINIDHI-VS/order-app)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## ✨ Features
 
-### `npm test`
+- ✅ Create and edit orders
+- ✅ Delete orders with confirmation
+- ✅ Auto-calculated total price
+- ✅ AG Grid table with pagination and sorting
+- ✅ Responsive Tailwind CSS design
+- ✅ Form validation
+- ✅ Loading states and error handling
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🛠️ Installation
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js (v14 or higher)
+- npm or yarn
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Steps
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+git clone https://github.com/your-username/order-app.git
+cd order-app
+npm install
+npm start
+```
 
-### `npm run eject`
+The app will open at `http://localhost:3000`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🛠️ Technologies
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+| Technology | Purpose |
+|-----------|---------|
+| React | UI Framework |
+| AG Grid | Data Grid |
+| Tailwind CSS | Styling |
+| MockAPI | Backend API |
+| Custom Hooks | State Management |
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 📜 Scripts
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm start       # Run development server
+npm run build   # Create production build
+```
 
-## Learn More
+## 🔌 API Configuration
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The app uses MockAPI for backend services. Update the API endpoint in `src/api/orderApi.js`:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```javascript
+const API_BASE = 'https://your-mockapi-url.mockapi.io/api/v1/order';
+```
 
-### Code Splitting
+## 📋 Order Data Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```javascript
+{
+  id: string,
+  productName: string,
+  quantity: number,
+  price: number,
+  totalPrice: number  // Auto-calculated
+}
+```
 
-### Analyzing the Bundle Size
+## 🧠 Key Features Explained
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Order Form
+- Add new orders or edit existing ones
+- Real-time total price calculation
+- Form validation before submission
+- Auto-close success message after 3 seconds
 
-### Making a Progressive Web App
+### Orders Grid
+- Paginated table view
+- Edit and delete actions
+- Sorting on all columns
+- Responsive design
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Custom Hook
+The `useOrders` hook handles:
+- Fetching orders from API
+- Managing selected order
+- Loading and error states
+- Grid refresh functionality
 
-### Advanced Configuration
+## 👤 Author
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# order-app
+SRINIDHI V S - [GitHub](https://github.com/SRINIDHI-VS)
