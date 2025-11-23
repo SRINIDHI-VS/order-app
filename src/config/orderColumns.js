@@ -1,74 +1,123 @@
+import AvatarCell from "../components/AvatarCell";
 import { toNumber } from "../utils/helpers";
 import ActionButton from "../components/GridButtons";
 
 export const getOrderColumns = (onSelectEdit, handleDelete) => [
   {
-    field: "id",
-    headerName: "ID",
-    width: 100,
-    headerClass: "flex items-center justify-center text-center",
-    cellClass: "flex items-center",
+    headerName: "",
+    checkboxSelection: true,
+    headerCheckboxSelection: true,
+    width: 60,
+    pinned: "left",
   },
+
   {
-    field: "name",
-    headerName: "Customer Name",
-    headerClass: "flex items-center justify-center text-center",
-    cellClass: "flex items-center",
+    headerName: "Basic Details",
+    marryChildren: true,
+    children: [
+      { field: "id", headerName: "ID", width: 100 },
+      { field: "name", headerName: "Customer Name", width: 220 },
+      { field: "client", headerName: "Client", width: 160 },
+      { field: "uniqueid", headerName: "Unique ID", width: 140 },
+
+      {
+        field: "createdAt",
+        headerName: "Created At",
+        width: 160,
+        filter: "agDateColumnFilter",
+        valueFormatter: ({ value }) =>
+          value ? new Date(value).toLocaleString() : "",
+      },
+    ],
   },
+
   {
-    field: "product",
-    headerName: "Product",
-    width: 120,
-    headerClass: "flex items-center justify-center text-center",
-    cellClass: "flex items-center",
+    headerName: "Product Details",
+    marryChildren: true,
+    children: [
+      { field: "product", headerName: "Product", width: 150 },
+      { field: "color", headerName: "Color", width: 120 },
+      { field: "company", headerName: "Company", width: 200 },
+      { field: "showroom", headerName: "Showroom", width: 160 },
+      { field: "country", headerName: "Country", width: 140 },
+
+      {
+        field: "loadingDate",
+        headerName: "Loading Date",
+        width: 150,
+        filter: "agDateColumnFilter",
+        valueFormatter: ({ value }) =>
+          value ? new Date(value).toLocaleDateString() : "",
+      },
+
+      {
+        field: "avatar",
+        headerName: "Avatar",
+        width: 120,
+        cellRenderer: AvatarCell,
+      },
+    ],
   },
+
   {
-    field: "price1",
-    headerName: "Price 1",
-    valueGetter: (p) => toNumber(p.data.price1),
-    valueFormatter: (p) => `$${p.value.toFixed(2)}`,
-    width: 100,
-    type: "numericColumn",
-    headerClass: "flex items-center justify-center text-center",
-    cellClass: "flex items-center",
+    headerName: "Pricing",
+    marryChildren: true,
+    children: [
+      {
+        field: "price1",
+        headerName: "Price 1",
+        width: 130,
+        filter: "agNumberColumnFilter",
+        valueFormatter: ({ value }) =>
+          value ? `$${Number(value).toFixed(2)}` : "$0.00",
+      },
+      {
+        field: "price2",
+        headerName: "Price 2",
+        width: 130,
+        filter: "agNumberColumnFilter",
+        valueFormatter: ({ value }) =>
+          value ? `$${Number(value).toFixed(2)}` : "$0.00",
+      },
+      { field: "total", headerName: "Total (API)", width: 120 },
+
+      {
+        field: "totalPrice",
+        headerName: "Total (Calculated)",
+        width: 160,
+        valueGetter: ({ data }) =>
+          toNumber(data?.price1) + toNumber(data?.price2),
+        valueFormatter: ({ value }) => `$${Number(value).toFixed(2)}`,
+        cellClass: "font-semibold text-green-700",
+      },
+    ],
   },
-  {
-    field: "price2",
-    headerName: "Price 2",
-    valueGetter: (p) => toNumber(p.data.price2),
-    valueFormatter: (p) => `$${p.value.toFixed(2)}`,
-    width: 100,
-    type: "numericColumn",
-    headerClass: "flex items-center justify-center text-center",
-    cellClass: "flex items-center",
-  },
-  {
-    field: "totalPrice",
-    headerName: "Total",
-    valueGetter: (p) => toNumber(p.data.price1) + toNumber(p.data.price2),
-    valueFormatter: (p) => `$${p.value.toFixed(2)}`,
-    width: 100,
-    type: "numericColumn",
-    headerClass: "flex items-center justify-center text-center",
-    cellClass: "flex items-center font-bold text-green-600",
-  },
+
   {
     headerName: "Actions",
-    headerClass: "flex items-center justify-center text-center",
-    cellRenderer: (p) => (
-      <div className="flex gap-4 items-center h-full">
+    pinned: "right",
+    width: 200,
+    cellRenderer: (params) => (
+      <div
+        style={{
+          display: "flex",
+          gap: 8,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <ActionButton
           label="Edit"
           className="bg-indigo-500 hover:bg-indigo-600"
-          onClick={() => onSelectEdit(p.data)}
+          onClick={() => onSelectEdit(params.data)}
         />
+
         <ActionButton
           label="Delete"
           className="bg-red-500 hover:bg-red-600"
-          onClick={() => handleDelete(p.data.id)}
+          onClick={() => handleDelete(params.data.id)}
         />
       </div>
     ),
-    cellStyle: { overflow: "visible" },
   },
 ];

@@ -12,7 +12,7 @@ export default function App() {
         Order Management
       </h1>
 
-      <div className="max-w-5xl mx-auto bg-indigo-100 shadow-lg rounded-xl p-6 space-y-8">
+      <div className="max-w-8xl mx-auto bg-indigo-100 shadow-lg rounded-xl p-6 space-y-8">
         <OrderForm
           selectedOrder={selectedOrder}
           refreshGrid={refresh}
