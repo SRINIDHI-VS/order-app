@@ -1,3 +1,5 @@
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import OrderGrid from "./components/OrderGrid";
 import OrderForm from "./components/OrderForm";
 import useOrders from "./hooks/useOrders";
@@ -8,36 +10,37 @@ export default function App() {
     useOrders();
 
   return (
-    <div className="min-h-screen bg-blue-50 p-6">
-      <h1 className="text-4xl font-extrabold text-center mb-8 text-gray-800 tracking-tight">
-        Order Management
-      </h1>
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <Header />
+      <main className="flex-1">
+        <div className="w-full max-w-full sm:max-w-7xl mx-auto bg-blue-100 shadow-lg rounded-xl p-4 sm:p-6 mt-3 space-y-8 overflow-x-auto">
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <OrderGrid
+              orders={orders}
+              onSelectEdit={setSelectedOrder}
+              refreshGrid={refresh}
+            />
+          )}
 
-      <div className="max-w-8xl mx-auto bg-blue-100 shadow-lg rounded-xl p-6 space-y-8">
-        {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-          </div>
-        ) : (
-          <OrderGrid
-            orders={orders}
-            onSelectEdit={setSelectedOrder}
+          {error && <p className="text-red-600 text-center">{error}</p>}
+        </div>
+
+        <Modal
+          open={selectedOrder !== null}
+          onClose={() => setSelectedOrder(null)}
+        >
+          <OrderForm
+            selectedOrder={selectedOrder}
             refreshGrid={refresh}
+            clearSelection={() => setSelectedOrder(null)}
           />
-        )}
-
-        {error && <p className="text-red-600 text-center">{error}</p>}
-      </div>
-      <Modal
-        open={selectedOrder !== null}
-        onClose={() => setSelectedOrder(null)}
-      >
-        <OrderForm
-          selectedOrder={selectedOrder}
-          refreshGrid={refresh}
-          clearSelection={() => setSelectedOrder(null)}
-        />
-      </Modal>
+        </Modal>
+      </main>
+      <Footer />
     </div>
   );
 }

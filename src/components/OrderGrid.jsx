@@ -54,63 +54,67 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
   };
 
   return (
-    <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-200 overflow-x-auto">
-      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-800">Orders</h2>
-          <p className="text-gray-600 text-sm mt-1">
-            {processed.length} total records
-          </p>
+    <div className="w-full overflow-x-auto sm:rounded-xl">
+      <div className="bg-white shadow-xl rounded-2xl p-2 sm:p-6 border border-gray-200">
+        <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-600">Orders</h2>
+            <p className="text-gray-600 text-sm mt-1">
+              {processed.length} total records
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2">
+            <input
+              value={quickFilter}
+              onChange={(e) => setQuickFilter(e.target.value)}
+              placeholder="Quick search"
+              className="px-3 py-2 border rounded w-full sm:w-auto"
+              style={{ minWidth: 200 }}
+            />
+            <ActionButton
+              label="Add Order"
+              className="bg-blue-500"
+              onClick={() => onSelectEdit({ isNew: true })}
+            />
+
+            <ActionButton
+              label="Export CSV"
+              className="bg-emerald-600"
+              onClick={exportCsv}
+            />
+
+            <ActionButton
+              label="Delete Selected"
+              className="bg-red-600"
+              onClick={deleteSelected}
+            />
+          </div>
+        </header>
+
+        <div className="overflow-x-auto">
+          <div className="ag-theme-alpine w-full" style={{ height: 600 }}>
+            <AgGridReact
+              onGridReady={onGridReady}
+              rowData={processed}
+              columnDefs={columnDefs}
+              rowSelection="multiple"
+              pagination={true}
+              paginationPageSize={20}
+              animateRows={true}
+              headerHeight={52}
+              rowHeight={45}
+              quickFilterText={quickFilter}
+              defaultColDef={{
+                sortable: true,
+                filter: true,
+                resizable: true,
+                minWidth: 120,
+                cellClass: "flex items-center",
+              }}
+            />
+          </div>
         </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          <input
-            value={quickFilter}
-            onChange={(e) => setQuickFilter(e.target.value)}
-            placeholder="Quick search"
-            className="px-3 py-2 border rounded w-full sm:w-auto"
-            style={{ minWidth: 200 }}
-          />
-          <ActionButton
-            label="Add Order"
-            className="bg-blue-500"
-            onClick={() => onSelectEdit({ isNew: true })}
-          />
-
-          <ActionButton
-            label="Export CSV"
-            className="bg-emerald-600"
-            onClick={exportCsv}
-          />
-
-          <ActionButton
-            label="Delete Selected"
-            className="bg-red-600"
-            onClick={deleteSelected}
-          />
-        </div>
-      </header>
-
-      <div className="ag-theme-alpine" style={{ height: 600 }}>
-        <AgGridReact
-          onGridReady={onGridReady}
-          rowData={processed}
-          columnDefs={columnDefs}
-          rowSelection="multiple"
-          pagination={true}
-          paginationPageSize={20}
-          animateRows={true}
-          headerHeight={52}
-          rowHeight={45}
-          quickFilterText={quickFilter}
-          defaultColDef={{
-            sortable: true,
-            filter: true,
-            resizable: true,
-            minWidth: 120,
-            cellClass: "flex items-center",
-          }}
-        />
       </div>
     </div>
   );

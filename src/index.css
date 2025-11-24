@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ================================
-   CELL FOCUS & ROW SELECTION
-================================ */
 .ag-theme-alpine .ag-cell:focus,
 .ag-theme-alpine .ag-cell:focus-within {
   outline: none !important;
@@ -22,4 +19,9 @@
 
 .ag-theme-alpine .ag-row:hover {
   background-color: rgb(180, 204, 242) !important;
+}
+
+.ag-theme-alpine {
+  width: 100% !important;
+  min-width: 600px;
 }

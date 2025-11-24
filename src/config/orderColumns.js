@@ -9,6 +9,8 @@ export const getOrderColumns = (onSelectEdit, handleDelete) => [
     checkboxSelection: true,
     headerCheckboxSelection: true,
     width: 40,
+    minWidth: 35, // forces smaller size
+    maxWidth: 45,
     pinned: "left",
     filter: false,
   },
