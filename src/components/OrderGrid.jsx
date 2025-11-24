@@ -37,6 +37,7 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
 
   const onGridReady = (params) => {
     gridRef.current = params.api;
+    setTimeout(() => params.api.sizeColumnsToFit(), 200);
   };
 
   const exportCsv = () => {
@@ -55,10 +56,10 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
 
   return (
     <div className="w-full overflow-x-auto sm:rounded-xl">
-      <div className="bg-white shadow-xl rounded-2xl p-2 sm:p-6 border border-gray-200">
+      <div className="bg-white shadow-xl rounded-2xl p-3 sm:p-6 border border-gray-200">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
           <div>
-            <h2 className="text-2xl font-bold text-gray-600">Orders</h2>
+            <h2 className="text-2xl font-bold text-gray-700">Orders</h2>
             <p className="text-gray-600 text-sm mt-1">
               {processed.length} total records
             </p>
@@ -99,18 +100,50 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
               rowData={processed}
               columnDefs={columnDefs}
               rowSelection="multiple"
+              quickFilterText={quickFilter}
               pagination={true}
               paginationPageSize={20}
               animateRows={true}
               headerHeight={52}
               rowHeight={45}
-              quickFilterText={quickFilter}
+              enableRangeSelection={true}
+              enableCharts={true}
+              groupDisplayType={"multipleColumns"}
+              rowGroupPanelShow="always"
+              suppressAggFuncInHeader={false}
+              allowDragFromColumnsToolPanel={true}
               defaultColDef={{
                 sortable: true,
                 filter: true,
                 resizable: true,
                 minWidth: 120,
+                enableRowGroup: true,
+                enablePivot: true,
+                enableValue: true,
                 cellClass: "flex items-center",
+              }}
+              sideBar={{
+                toolPanels: [
+                  {
+                    id: "columns",
+                    labelDefault: "Columns",
+                    iconKey: "columns",
+                    toolPanel: "agColumnsToolPanel",
+                  },
+                  {
+                    id: "filters",
+                    labelDefault: "Filters",
+                    iconKey: "filter",
+                    toolPanel: "agFiltersToolPanel",
+                  },
+                  {
+                    id: "charts",
+                    labelDefault: "Charts",
+                    iconKey: "chart",
+                    toolPanel: "agChartToolPanel",
+                  },
+                ],
+                defaultToolPanel: "",
               }}
             />
           </div>
