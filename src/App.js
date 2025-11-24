@@ -10,7 +10,7 @@ export default function App() {
     useOrders();
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
         <div className="w-full max-w-full sm:max-w-7xl mx-auto bg-blue-100 shadow-lg rounded-xl p-4 sm:p-6 mt-3 space-y-8 overflow-x-auto">

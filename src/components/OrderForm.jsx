@@ -135,7 +135,7 @@ export default function OrderForm({
   ];
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+    <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-200">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-2xl font-bold text-gray-800">
           {selectedOrder?.id ? "Update Order" : "Create New Order"}
@@ -191,7 +191,7 @@ export default function OrderForm({
           type="button"
           onClick={handleSubmit}
           disabled={isSubmitting}
-          className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="flex-1 bg-blue-800 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-900 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           {isSubmitting
             ? selectedOrder?.id

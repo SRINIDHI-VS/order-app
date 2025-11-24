@@ -113,7 +113,7 @@ export const getOrderColumns = (onSelectEdit, handleDelete) => [
       >
         <IconButton
           icon={Pencil}
-          className="text-blue-600 hover:text-blue-800"
+          className="text-blue-800 hover:text-blue-800"
           onClick={() => onSelectEdit(params.data)}
         />
 

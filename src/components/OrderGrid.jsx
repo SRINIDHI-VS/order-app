@@ -56,7 +56,7 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
 
   return (
     <div className="w-full overflow-x-auto sm:rounded-xl">
-      <div className="bg-white shadow-xl rounded-2xl p-3 sm:p-6 border border-gray-200">
+      <div className="bg-white shadow-md rounded-xl p-4 sm:p-6 border border-gray-200">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
           <div>
             <h2 className="text-2xl font-bold text-gray-700">Orders</h2>
@@ -75,7 +75,7 @@ export default function OrderGrid({ orders = [], onSelectEdit, refreshGrid }) {
             />
             <ActionButton
               label="Add Order"
-              className="bg-blue-500"
+              className="bg-blue-800"
               onClick={() => onSelectEdit({ isNew: true })}
             />
 
